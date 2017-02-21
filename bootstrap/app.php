@@ -152,6 +152,6 @@ $app->group(['namespace' => App\Http\Controllers::class], function ($app) {
 | the aliases are "lazy" loaded so they don't hinder performance.
 |
 */
-class_alias('Tymon\JWTAuth\Facades\JWTAuth', 'JWTAuth');
+//class_alias('Tymon\JWTAuth\Facades\JWTAuth', 'JWTAuth');
 
 return $app;

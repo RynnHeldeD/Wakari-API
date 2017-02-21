@@ -54,7 +54,7 @@ $api->version($params, function ($api) {
         'as'    => 'api.auth.login',
         'uses'  => 'App\Http\Controllers\Auth\AuthController@postLogin',
     ]);
-
+/*
     $api->group([
         'middleware' => 'api.auth',
     ], function ($api) {
@@ -75,4 +75,5 @@ $api->version($params, function ($api) {
             'as'    => 'api.auth.invalidate'
         ]);
     });
+    */
 });

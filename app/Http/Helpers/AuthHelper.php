@@ -2,7 +2,7 @@
 
 namespace App\Http\Helpers;
 
-use JWTAuth;
+//use JWTAuth;
 
 class AuthHelper
 {
@@ -11,7 +11,7 @@ class AuthHelper
             "code" => 200,
             "message" => ""
         );
-
+/*
         try{
             if (! $user = JWTAuth::parseToken()->authenticate()) {
                 $response['code'] = 404;
@@ -27,7 +27,7 @@ class AuthHelper
             $response['code'] = $e->getStatusCode();
             $response['message'] = response()->json(['token_absent'], $e->getStatusCode());
         }
-
+*/
         return $response;
     }
 }
