@@ -37,10 +37,12 @@ return [
     */
 
     'guards' => [
+        /*
         'api' => [
             'provider' => 'jwt',
             'driver' => 'session',
         ],
+        */
     ],
 
     /*
@@ -61,10 +63,12 @@ return [
     */
 
     'providers' => [
+        /*
         'jwt' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
+        */
     ],
 
 ];

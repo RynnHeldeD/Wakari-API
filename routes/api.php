@@ -50,11 +50,12 @@ $api->version($params, function ($api) {
     /**
     * AUTHENTICATION
     **/
+    /*
     $api->post('/auth/login', [
         'as'    => 'api.auth.login',
         'uses'  => 'App\Http\Controllers\Auth\AuthController@postLogin',
     ]);
-/*
+
     $api->group([
         'middleware' => 'api.auth',
     ], function ($api) {
