@@ -38,10 +38,10 @@ class WordController extends BaseController
     **/
     public function addWord(Request $request) {
         $requestData = $request->all();
-        
-        if (isset($requestData['data'])) {
-            $data = json_decode($requestData['data'], true);
+        $json = json_decode($requestData['data'], true);
+        $data = isset($json['data']) ? $json['data'] : null;
 
+        if (!empty($data)) {
             $word = new \App\Word();
             $word->kanji = $data['kanji'];
             $word->kana = $data['kana'];
@@ -66,11 +66,12 @@ class WordController extends BaseController
     **/
     public function updateWord(Request $request) {
         $requestData = $request->all();
+        $json = json_decode($requestData['data'], true);
+        $data = isset($json['data']) ? $json['data'] : null;
 
-        if (isset($requestData['data'])) {
-            $data = json_decode($requestData['data'], true);
-
+        if (!empty($data)) {
             $word = \App\Word::find($data['id']);
+            
             if ($word) {
                 $word->kanji = $data['kanji'];
                 $word->kana = $data['kana'];
@@ -97,10 +98,10 @@ class WordController extends BaseController
     **/
     public function deleteWord(Request $request) {
         $requestData = $request->all();
-        
-        if (isset($requestData['data'])) {
-            $data = json_decode($requestData['data'], true);
+        $json = json_decode($requestData['data'], true);
+        $data = isset($json['data']) ? $json['data'] : null;
 
+        if (!empty($data)) {
             $result = \App\Word::destroy($data['id']);
             $response = response()->json($result);
         } else {
