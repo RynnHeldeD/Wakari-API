@@ -20,11 +20,15 @@ class WordController extends BaseController
             $words = \App\Word::all();
             $json = JsonHelper::collectionToArray($words);
         } else {
-            $word = is_null($id) ? \App\Word::findAll() : \App\Word::find($id);
-            $json = JsonHelper::objectToArray($word);
+            $word = \App\Word::find($id);
+            if (!is_null($word)) {
+                $json = JsonHelper::objectToArray($word);
+            } else {
+                $json = '{"Error":"No word with id found."}';
+            }
         }
 
-        return response()->json($json, 200);;
+        return response()->json($json);
     }
 
 
@@ -34,9 +38,10 @@ class WordController extends BaseController
     **/
     public function addWord(Request $request) {
         $requestData = $request->all();
-        $data = json_decode($requestData, true);
+        
+        if (isset($requestData['data'])) {
+            $data = json_decode($requestData['data'], true);
 
-        if (!empty($data)) {
             $word = new \App\Word();
             $word->kanji = $data['kanji'];
             $word->kana = $data['kana'];
@@ -48,7 +53,7 @@ class WordController extends BaseController
             $json = JsonHelper::objectToArray($word);
             $response = response()->json($json);
         } else {
-            $response = response()->json('No data provided');
+            $response = response()->json('{"Error":"No data provided."}');
         }
 
         return $response;
@@ -61,21 +66,25 @@ class WordController extends BaseController
     **/
     public function updateWord(Request $request) {
         $requestData = $request->all();
-        $data = json_decode($requestData['data'], true);
 
-        if (!empty($data)) {
+        if (isset($requestData['data'])) {
+            $data = json_decode($requestData['data'], true);
+
             $word = \App\Word::find($data['id']);
-            $word->kanji = $data['kanji'];
-            $word->kana = $data['kana'];
-            $word->romaji = $data['romaji'];
-            $word->meaning = $data['meaning'];
-            $word->notes = $data['notes'];
-            $word->save();
-
-            $json = JsonHelper::objectToArray($word);
-            $response = response()->json($json);
+            if ($word) {
+                $word->kanji = $data['kanji'];
+                $word->kana = $data['kana'];
+                $word->romaji = $data['romaji'];
+                $word->meaning = $data['meaning'];
+                $word->notes = $data['notes'];
+                $word->save();
+                $json = JsonHelper::objectToArray($word);
+                $response = response()->json($json);
+            } else {
+                $response = response()->json('{"Error":"No word with id found."}');
+            }
         } else {
-            $response = response()->json('No data provided');
+            $response = response()->json('{"Error":"No data provided."}');
         }
 
         return $response;
@@ -88,13 +97,14 @@ class WordController extends BaseController
     **/
     public function deleteWord(Request $request) {
         $requestData = $request->all();
-        $data = json_decode($requestData['data'], true);
+        
+        if (isset($requestData['data'])) {
+            $data = json_decode($requestData['data'], true);
 
-        if (!empty($data)) {
             $result = \App\Word::destroy($data['id']);
             $response = response()->json($result);
         } else {
-            $response = response()->json('No id provided');
+            $response = response()->json('{"Error":"No id provided."}');
         } 
 
         return $response;
