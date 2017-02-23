@@ -37,7 +37,7 @@ GET > http://wakari-api.huitiemeciel.info/word
 ### GET /word/{id}
 Return word with specified id.
 ```
-http://wakari-api.huitiemeciel.info/word/2
+GET > http://wakari-api.huitiemeciel.info/word/2
 ```
 **Success**
 ```json
