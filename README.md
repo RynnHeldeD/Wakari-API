@@ -1,11 +1,10 @@
 # Wakari-API
 The API for Wakari, the Japanese dictionary project.
 
-## Available endpoints
 
-### -- Words --
+## Words 
 
-#### GET /word
+### GET /word
 Return all existing words.
 ```
 GET > http://wakari-api.huitiemeciel.info/word
@@ -36,7 +35,7 @@ GET > http://wakari-api.huitiemeciel.info/word
 }
 ```
 
-#### GET /word/{id}
+### GET /word/{id}
 Return word with specified id.
 ```
 http://wakari-api.huitiemeciel.info/word/2
@@ -61,7 +60,7 @@ http://wakari-api.huitiemeciel.info/word/2
 }
 ```
 
-#### PUT /word
+### PUT /word
 Update a word with data provided.
 The updated word is the one specified with parameter "id".
 ```
@@ -87,7 +86,7 @@ PUT > http://wakari-api.huitiemeciel.info/word?data={"kanji":"家","kana":"い�
 }
 ```
 
-#### POST /word
+### POST /word
 Create a word with data provided.
 Return the created word with newly attributed id.
 ```
@@ -112,7 +111,7 @@ POST > http://wakari-api.huitiemeciel.info/word?data={"id":747,"kanji":"#","kana
 ```
 
 
-#### DELETE /word
+### DELETE /word
 Delete a word with id provided.
 ```
 DELETE > http://wakari-api.huitiemeciel.info/word?data={"id":747}
