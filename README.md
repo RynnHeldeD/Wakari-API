@@ -30,8 +30,7 @@ GET > http://wakari-api.huitiemeciel.info/word
         "notes":null,
         "updated_at":null,
         "created_at":null
-    },
-    ...
+    }
 }
 ```
 
