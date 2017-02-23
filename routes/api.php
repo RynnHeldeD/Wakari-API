@@ -21,29 +21,31 @@ $api->version($params, function ($api) {
     /**
     * OBJECTIVES
     **/
-    $api->post('/words/create/', [
+    $api->put('word', [
         'as'    => 'api.words.create',
         'uses'  => 'App\Http\Controllers\WordController@addWord'   
     ]);
 
-    $api->post('/words/all/', [
+    /*
+    $api->get('/word/all/', [
         'as'    => 'api.words.all',
         'uses'  => 'App\Http\Controllers\WordController@getWords'   
     ]);
+    */
 
-    $api->post('/words/get/{id}', [
+    $api->get('word/{id?}', [
         'as'    => 'api.words.get',
         'uses'  => 'App\Http\Controllers\WordController@getWordById'   
     ]);
 
-    $api->post('/words/update/', [
+    $api->post('word', [
         'as'    => 'api.words.update',
         'uses'  => 'App\Http\Controllers\WordController@updateWord'   
     ]);
 
-    $api->post('/words/delete/{id}', [
+    $api->delete('word', [
         'as'    => 'api.words.delete',
-        'uses'  => 'App\Http\Controllers\WordController@deletetWord'   
+        'uses'  => 'App\Http\Controllers\WordController@deleteWord'   
     ]);
 
 

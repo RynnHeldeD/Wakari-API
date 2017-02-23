@@ -9,101 +9,94 @@ use App\Http\Helpers\AuthHelper;
 
 class WordController extends BaseController
 {
+    public $timestamps = true;
+
     /**
-    * Retuns all words
+    * Method : GET
+    * Retuns word with specified id or all
     **/
-    public function getWords(Request $request) {
-        $response = AuthHelper::checkAuth();
-        if ($response['code'] == 200) {
+    public function getWordById(Request $request, $id = null) {
+        if (is_null($id)) {
             $words = \App\Word::all();
             $json = JsonHelper::collectionToArray($words);
-            $response['message'] = response()->json($json, 200);
-        } 
-
-        return $response['message'];
-    }
-
-    /**
-    * Retuns word with specified id
-    **/
-    public function getWordById(Request $request, $id) {
-       $response = AuthHelper::checkAuth();
-        if ($response['code'] == 200) {
-            $word = \App\Word::find($id);
+        } else {
+            $word = is_null($id) ? \App\Word::findAll() : \App\Word::find($id);
             $json = JsonHelper::objectToArray($word);
-            $response['message'] = response()->json($json, 200);
-        } 
+        }
 
-        return $response['message'];
+        return response()->json($json, 200);;
     }
 
+
     /**
-    * Create word with POST data
+    * Method : PUT
+    * Create word
     **/
     public function addWord(Request $request) {
-        $response = AuthHelper::checkAuth();
-        if ($response['code'] == 200) {
-            $requestData = $request->all();
-            if (isset($requestData['data'])) {
-                $data = json_decode($requestData['data'], true);
+        $requestData = $request->all();
+        $data = json_decode($requestData, true);
 
-                $word = new \App\Word();
-                $word->kanji = $data['kanji'];
-                $word->kana = $data['kana'];
-                $word->romaji = $data['romaji'];
-                $word->meaning = $data['meaning'];
-                $word->note = $data['note'];
-                $word->save();
+        if (!empty($data)) {
+            $word = new \App\Word();
+            $word->kanji = $data['kanji'];
+            $word->kana = $data['kana'];
+            $word->romaji = $data['romaji'];
+            $word->meaning = $data['meaning'];
+            $word->notes = $data['notes'];
+            $word->save();
 
-                $json = JsonHelper::objectToArray($word);
-                $response['message'] = response()->json([$json, 200]);
-            } else {
-                $response['message'] = response()->json(['No data', 200]);
-            }
-        } 
+            $json = JsonHelper::objectToArray($word);
+            $response = response()->json($json);
+        } else {
+            $response = response()->json('No data provided');
+        }
 
-        return $response['message'];
+        return $response;
     }
 
-    /**
-    * Delete word with specified id
-    **/
-    public function deleteWord(Request $request, $id) {
-        $response = AuthHelper::checkAuth();
-        if ($response['code'] == 200) {
-            $result = \App\Word::destroy($id);
-            
-            $response['message'] = response()->json($result, 200);
-        } 
-
-        return $response['message'];
-    }
 
     /**
-    * Update word with POST data
+    * Method : POST
+    * Update word with data
     **/
     public function updateWord(Request $request) {
-        $response = AuthHelper::checkAuth();
-        if ($response['code'] == 200) {
-            $requestData = $request->all();
-            if (isset($requestData['data'])) {
-                $data = json_decode($requestData['data'], true);
+        $requestData = $request->all();
+        $data = json_decode($requestData['data'], true);
 
-                $word = \App\Word::find($data['id']);
-                $word->kanji = $data['kanji'];
-                $word->kana = $data['kana'];
-                $word->romaji = $data['romaji'];
-                $word->meaning = $data['meaning'];
-                $word->note = $data['note'];
-                $word->save();
+        if (!empty($data)) {
+            $word = \App\Word::find($data['id']);
+            $word->kanji = $data['kanji'];
+            $word->kana = $data['kana'];
+            $word->romaji = $data['romaji'];
+            $word->meaning = $data['meaning'];
+            $word->notes = $data['notes'];
+            $word->save();
 
-                $json = JsonHelper::objectToArray($word);
-                $response['message'] = response()->json([$json, 200]);
-            } else {
-                $response['message'] = response()->json(['No data', 200]);
-            }
+            $json = JsonHelper::objectToArray($word);
+            $response = response()->json($json);
+        } else {
+            $response = response()->json('No data provided');
+        }
+
+        return $response;
+    }
+
+    
+    /**
+    * Method : DELETE
+    * Delete word with specified id 
+    **/
+    public function deleteWord(Request $request) {
+        $requestData = $request->all();
+        $data = json_decode($requestData['data'], true);
+
+        if (!empty($data)) {
+            $result = \App\Word::destroy($data['id']);
+            $response = response()->json($result);
+        } else {
+            $response = response()->json('No id provided');
         } 
 
-        return $response['message'];
+        return $response;
     }
 }
