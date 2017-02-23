@@ -31,7 +31,7 @@ GET > http://wakari-api.huitiemeciel.info/word
         "updated_at":null,
         "created_at":null
     }
-}
+]
 ```
 
 ### GET /word/{id}
