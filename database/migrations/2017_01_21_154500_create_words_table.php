@@ -14,12 +14,14 @@ class CreateWordsTable extends Migration
     public function up()
     {
         Schema::create('words', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+
             $table->increments('id');
             $table->string('kanji', 255);
             $table->string('kana', 255);
             $table->string('romaji', 255);
             $table->string('meaning', 255);
-            $table->string('note', 255);
+            $table->string('notes', 255);
             $table->timestamps();
         });
     }
