@@ -143,7 +143,7 @@ DELETE > http://wakari-api.huitiemeciel.info/word/747
 }
 ```
 
-## Theme 
+## Themes
 
 ### GET /theme
 Return all existing themes.
