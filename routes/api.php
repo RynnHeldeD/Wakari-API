@@ -43,7 +43,7 @@ $api->version($params, function ($api) {
         'uses'  => 'App\Http\Controllers\WordController@updateWord'   
     ]);
 
-    $api->delete('word', [
+    $api->delete('word/{id}', [
         'as'    => 'api.words.delete',
         'uses'  => 'App\Http\Controllers\WordController@deleteWord'   
     ]);

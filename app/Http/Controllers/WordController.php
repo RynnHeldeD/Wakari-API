@@ -94,17 +94,30 @@ class WordController extends BaseController
     * Method : DELETE
     * Delete word with specified id 
     **/
-    public function deleteWord(Request $request) {
-        $requestData = $request->all();
-        $data = json_decode($requestData['data'], true);
-
-        if (!empty($data)) {
-            $result = \App\Word::destroy($data['id']);
+    public function deleteWord(Request $request, $id) {
+        if (!empty($id) && is_numeric($id)) {
+            $result = \App\Word::destroy($id);
             $response = response()->json($result);
         } else {
             $response = response()->json('{"Error":"No id provided."}');
         } 
 
         return $response;
+    }
+
+    /**
+    * Method : GET
+    * Return all words which are linked to provided theme
+    **/
+    public function getWordsFromTheme(Request $request, $theme) {
+        if (!empty($theme) && is_string($theme)) {
+//            $result = \App\Word::destroy($id);
+            $response = response()->json($result);
+        } else {
+            $response = response()->json('{"Error":"No id provided."}');
+        } 
+
+        return $response;
+    }
     }
 }
