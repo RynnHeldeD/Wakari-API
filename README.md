@@ -110,10 +110,10 @@ POST > http://wakari-api.huitiemeciel.info/word?data={"id":747,"kanji":"#","kana
 ```
 
 
-### DELETE /word
+### DELETE /word/{id}
 Delete a word with id provided.
 ```
-DELETE > http://wakari-api.huitiemeciel.info/word?data={"id":747}
+DELETE > http://wakari-api.huitiemeciel.info/word/747
 ```
 
 **Success**
