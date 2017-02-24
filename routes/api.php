@@ -19,19 +19,12 @@ $params = [
 
 $api->version($params, function ($api) {
     /**
-    * OBJECTIVES
+    * WORDS
     **/
     $api->put('word', [
         'as'    => 'api.words.create',
         'uses'  => 'App\Http\Controllers\WordController@addWord'   
     ]);
-
-    /*
-    $api->get('/word/all/', [
-        'as'    => 'api.words.all',
-        'uses'  => 'App\Http\Controllers\WordController@getWords'   
-    ]);
-    */
 
     $api->get('word/{id?}', [
         'as'    => 'api.words.get',
@@ -48,35 +41,26 @@ $api->version($params, function ($api) {
         'uses'  => 'App\Http\Controllers\WordController@deleteWord'   
     ]);
 
-
     /**
-    * AUTHENTICATION
+    * THEMES
     **/
-    /*
-    $api->post('/auth/login', [
-        'as'    => 'api.auth.login',
-        'uses'  => 'App\Http\Controllers\Auth\AuthController@postLogin',
+    $api->put('theme', [
+        'as'    => 'api.theme.create',
+        'uses'  => 'App\Http\Controllers\ThemeController@addTheme'   
     ]);
 
-    $api->group([
-        'middleware' => 'api.auth',
-    ], function ($api) {
-        $api->get('/', [
-            'uses'  => 'App\Http\Controllers\APIController@getIndex',
-            'as'    => 'api.index'
-        ]);
-        $api->get('/auth/user', [
-            'uses'  => 'App\Http\Controllers\Auth\AuthController@getUser',
-            'as'    => 'api.auth.user'
-        ]);
-        $api->patch('/auth/refresh', [
-            'uses'  => 'App\Http\Controllers\Auth\AuthController@patchRefresh',
-            'as'    => 'api.auth.refresh'
-        ]);
-        $api->delete('/auth/invalidate', [
-            'uses'  => 'App\Http\Controllers\Auth\AuthController@deleteInvalidate',
-            'as'    => 'api.auth.invalidate'
-        ]);
-    });
-    */
+    $api->get('theme/{id?}', [
+        'as'    => 'api.theme.get',
+        'uses'  => 'App\Http\Controllers\ThemeController@getThemeById'   
+    ]);
+
+    $api->post('theme', [
+        'as'    => 'api.theme.update',
+        'uses'  => 'App\Http\Controllers\ThemeController@updateTheme'   
+    ]);
+
+    $api->delete('theme/{id}', [
+        'as'    => 'api.theme.delete',
+        'uses'  => 'App\Http\Controllers\ThemeController@deleteTheme'
+    ]);
 });

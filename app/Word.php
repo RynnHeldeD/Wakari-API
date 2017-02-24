@@ -12,4 +12,14 @@ class Word extends Model
     {
         return $this->belongsToMany('App\Theme');
     }
+
+    public function getThemes() {
+        $themes = [];
+
+        foreach ($this->themes as $theme) {
+            $themes[] = $theme;
+        }
+
+        return $this->themes;
+    }
 }

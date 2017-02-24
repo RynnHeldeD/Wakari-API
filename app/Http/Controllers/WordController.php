@@ -18,17 +18,18 @@ class WordController extends BaseController
     public function getWordById(Request $request, $id = null) {
         if (is_null($id)) {
             $words = \App\Word::all();
-            $json = JsonHelper::collectionToArray($words);
+            $response = JsonHelper::collectionToArray($words);
         } else {
             $word = \App\Word::find($id);
             if (!is_null($word)) {
-                $json = JsonHelper::objectToArray($word);
+                $response = JsonHelper::objectToArray($word);
+                $response['categories'] = JsonHelper::collectionToArray($word->themes);
             } else {
-                $json = '{"Error":"No word with id found."}';
+                $response = '{"Error":"No word with id found."}';
             }
         }
 
-        return response()->json($json);
+        return response()->json($response);
     }
 
 
@@ -103,21 +104,5 @@ class WordController extends BaseController
         } 
 
         return $response;
-    }
-
-    /**
-    * Method : GET
-    * Return all words which are linked to provided theme
-    **/
-    public function getWordsFromTheme(Request $request, $theme) {
-        if (!empty($theme) && is_string($theme)) {
-//            $result = \App\Word::destroy($id);
-            $response = response()->json($result);
-        } else {
-            $response = response()->json('{"Error":"No id provided."}');
-        } 
-
-        return $response;
-    }
     }
 }
