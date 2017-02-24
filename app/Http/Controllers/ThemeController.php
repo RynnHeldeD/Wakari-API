@@ -42,11 +42,7 @@ class ThemeController extends BaseController
 
         if (!empty($data)) {
             $theme = new \App\Theme();
-            $theme->kanji = $data['kanji'];
-            $theme->kana = $data['kana'];
-            $theme->romaji = $data['romaji'];
-            $theme->meaning = $data['meaning'];
-            $theme->notes = $data['notes'];
+            $theme->name = $data['name'];
             $theme->save();
 
             $json = JsonHelper::objectToArray($theme);
@@ -71,11 +67,7 @@ class ThemeController extends BaseController
             $theme = \App\Theme::find($data['id']);
             
             if ($theme) {
-                $theme->kanji = $data['kanji'];
-                $theme->kana = $data['kana'];
-                $theme->romaji = $data['romaji'];
-                $theme->meaning = $data['meaning'];
-                $theme->notes = $data['notes'];
+                $theme->name = $data['name'];
                 $theme->save();
                 $json = JsonHelper::objectToArray($theme);
                 $response = response()->json($json);
@@ -120,9 +112,11 @@ class ThemeController extends BaseController
             $result = [];
             if (!empty($theme)) {
                 $result = JsonHelper::collectionToArray($theme->words);
-            }
+            } else {
+                $result = '{"Error":"No theme found with key provided."}';
+            } 
         } else {
-            $result = '{"Error":"No id provided."}';
+            $result = '{"Error":"No key provided."}';
         } 
 
         return response()->json($result);
