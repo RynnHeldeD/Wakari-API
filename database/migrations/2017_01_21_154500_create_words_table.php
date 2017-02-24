@@ -20,7 +20,7 @@ class CreateWordsTable extends Migration
             $table->string('romaji', 255);
             $table->string('meaning', 255);
             $table->string('note', 255);
-            $table->timestamp();
+            $table->timestamps();
         });
     }
 
