@@ -66,8 +66,8 @@ class WordController extends BaseController
     **/
     public function updateWord(Request $request) {
         $requestData = $request->all();
-        $json = json_decode($requestData['data'], true);
-        $data = isset($json['data']) ? $json['data'] : null;
+        $data = json_decode($requestData['data'], true);
+        //$data = isset($json['data']) ? $json['data'] : null;
 
         if (!empty($data)) {
             $word = \App\Word::find($data['id']);
