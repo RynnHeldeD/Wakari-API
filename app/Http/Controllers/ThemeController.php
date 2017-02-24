@@ -109,16 +109,22 @@ class ThemeController extends BaseController
     * Method : GET
     * Return all words which are linked to provided theme id
     **/
-    public function getWordsFromTheme(Request $request, $id) {
-        /*
-        if (!empty($theme) && is_string($theme)) {
-//            $result = \App\Theme::destroy($id);
-            $response = response()->json($result);
+    public function getWordsFromTheme(Request $request, $key) {
+        if (!empty($key)) {
+            if ( is_numeric($key) ) {
+                $theme = \App\Theme::find($key);
+            } else {
+                $theme = \App\Theme::where('name', $key)->first();
+            }
+
+            $result = [];
+            if (!empty($theme)) {
+                $result = JsonHelper::collectionToArray($theme->words);
+            }
         } else {
-            $response = response()->json('{"Error":"No id provided."}');
+            $result = '{"Error":"No id provided."}';
         } 
 
-        return $response;
-        */
+        return response()->json($result);
     }
 }

@@ -63,4 +63,9 @@ $api->version($params, function ($api) {
         'as'    => 'api.theme.delete',
         'uses'  => 'App\Http\Controllers\ThemeController@deleteTheme'
     ]);
+
+    $api->get('theme/{id}/words', [
+        'as'    => 'api.theme.findWords',
+        'uses'  => 'App\Http\Controllers\ThemeController@getWordsFromTheme'
+    ]);
 });
