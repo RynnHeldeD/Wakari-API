@@ -50,13 +50,21 @@ class WordController extends BaseController
             $word->notes = $data['notes'];
             $word->save();
 
-            $json = JsonHelper::objectToArray($word);
-            $response = response()->json($json);
+            $themes = $data['themes'];
+            foreach ($themes as $themeName) {
+                $oTheme = \App\Theme::where('name', $themeName)->first();
+                if ($oTheme) {
+                    $word->themes()->save($oTheme);
+                }
+            }
+
+            $response = JsonHelper::objectToArray($word);
+            $response['themes'] = JsonHelper::collectionToArray($word->themes);
         } else {
-            $response = response()->json('{"Error":"No data provided."}');
+            $response = '{"Error":"No data provided."}';
         }
 
-        return $response;
+        return response()->json($response);
     }
 
 
@@ -78,16 +86,26 @@ class WordController extends BaseController
                 $word->meaning = $data['meaning'];
                 $word->notes = $data['notes'];
                 $word->save();
-                $json = JsonHelper::objectToArray($word);
-                $response = response()->json($json);
+
+                $word->themes()->detach();
+                $themes = $data['themes'];
+                foreach ($themes as $themeName) {
+                    $oTheme = \App\Theme::where('name', $themeName)->first();
+                    if ($oTheme) {
+                        $word->themes()->save($oTheme);
+                    }
+                }
+
+                $response = JsonHelper::objectToArray($word);
+                $response['themes'] = JsonHelper::collectionToArray($word->themes);
             } else {
-                $response = response()->json('{"Error":"No word with id found."}');
+                $response = '{"Error":"No word with id found."}';
             }
         } else {
-            $response = response()->json('{"Error":"No data provided."}');
+            $response = '{"Error":"No data provided."}';
         }
 
-        return $response;
+        return response()->json($response);
     }
 
     

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Theme extends Model
 {
     protected $table = 'themes';
+    public $timestamps = false;
 
     public function words()
     {
