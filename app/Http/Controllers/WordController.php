@@ -23,7 +23,7 @@ class WordController extends BaseController
             $word = \App\Word::find($id);
             if (!is_null($word)) {
                 $response = JsonHelper::objectToArray($word);
-                $response['categories'] = JsonHelper::collectionToArray($word->themes);
+                $response['themes'] = JsonHelper::collectionToArray($word->themes);
             } else {
                 $response = '{"Error":"No word with id found."}';
             }
