@@ -115,12 +115,47 @@ class WordController extends BaseController
     **/
     public function deleteWord(Request $request, $id) {
         if (!empty($id) && is_numeric($id)) {
-            $result = \App\Word::destroy($id);
-            $response = response()->json($result);
+            $response = \App\Word::destroy($id);
         } else {
-            $response = response()->json('{"Error":"No id provided."}');
+            $response = '{"Error":"No id provided."}';
         } 
 
-        return $response;
+        return response()->json($response);
     }
+
+    /**
+    * Method : GET
+    * Retrieve all word like given pattern
+    * Method can be 'begins' or 'contains'
+    * Type can be 'all', 'romaji', 'meaning'
+    * Default is 'begins', 'all'
+    **/
+    public function getWordsFromPattern($pattern, $method = 'begins', $type = 'all') {
+        if (!empty($pattern)) {
+            $pattern .= '%';
+            if ($method == 'contains') {
+                $pattern = '%' . $pattern;
+            }
+             
+            switch ($type) {
+                case 'romaji':
+                    $result = \App\Word::where('romaji', 'like', $pattern)->get();  
+                    break;
+                case 'meaning':
+                    $result = \App\Word::where('meaning', 'like', $pattern)->get();  
+                    break;
+                default:
+                    $result = \App\Word::where('romaji', 'like', $pattern)
+                        ->orWhere('meaning', 'like', $pattern)->get();
+                    break;
+            }
+            
+            $response = JsonHelper::collectionToArray($result);
+        } else {
+            $response = '{"Error":"No id provided."}';
+        } 
+
+        return response()->json($response);
+    }
+
 }

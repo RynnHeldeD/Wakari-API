@@ -21,6 +21,11 @@ $api->version($params, function ($api) {
     /**
     * WORDS
     **/
+    $api->get('word/like/{pattern}/{method?}/{type?}', [
+        'as'    => 'api.word.findPattern',
+        'uses'  => 'App\Http\Controllers\WordController@getWordsFromPattern'
+    ]);
+
     $api->put('word', [
         'as'    => 'api.words.create',
         'uses'  => 'App\Http\Controllers\WordController@addWord'   
@@ -44,6 +49,11 @@ $api->version($params, function ($api) {
     /**
     * THEMES
     **/
+    $api->get('theme/like/{pattern}/{method?}', [
+        'as'    => 'api.theme.findPattern',
+        'uses'  => 'App\Http\Controllers\ThemeController@getThemesFromPattern'
+    ]);
+
     $api->put('theme', [
         'as'    => 'api.theme.create',
         'uses'  => 'App\Http\Controllers\ThemeController@addTheme'   

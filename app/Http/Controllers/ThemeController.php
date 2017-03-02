@@ -121,4 +121,26 @@ class ThemeController extends BaseController
 
         return response()->json($result);
     }
+
+    /**
+    * Method : GET
+    * Retrieve all theme like given pattern
+    * Method can be 'begins' or 'contains'
+    * Default is 'begins'
+    **/
+    public function getThemesFromPattern($pattern, $method = 'begins') {
+        if (!empty($pattern)) {
+            $pattern .= '%';
+            if ($method == 'contains') {
+                $pattern = '%' . $pattern;
+            }
+             
+            $result = \App\Theme::where('name', 'like', $pattern)->get();
+            $response = JsonHelper::collectionToArray($result);
+        } else {
+            $response = '{"Error":"No pattern provided."}';
+        } 
+
+        return response()->json($response);
+    }
 }
