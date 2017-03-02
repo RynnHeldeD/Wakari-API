@@ -152,7 +152,7 @@ class WordController extends BaseController
             
             $response = JsonHelper::collectionToArray($result);
         } else {
-            $response = '{"Error":"No id provided."}';
+            $response = '{"Error":"No pattern provided."}';
         } 
 
         return response()->json($response);
