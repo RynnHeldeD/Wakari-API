@@ -49,7 +49,13 @@ GET > http://wakari-api.huitiemeciel.info/word/2
     "meaning":"saluer",
     "notes":null,
     "updated_at":null,
-    "created_at":null
+    "created_at":null,
+    "themes": [
+        {
+            "id":2,
+            "name":"Habitation"
+        }
+    ]
 }
 ```
 **Failure**
@@ -63,7 +69,7 @@ GET > http://wakari-api.huitiemeciel.info/word/2
 Create a word with data provided.
 Return the created word with newly attributed id.
 ```
-PUT > http://wakari-api.huitiemeciel.info/word?data={"kanji":"家","kana":"いえ","romaji":"ue","meaning":"maison","notes":"Uniquement le terme pour 'Maison', 'Appartement' se dit autrement.","categories":["maison","habitation"]}
+PUT > http://wakari-api.huitiemeciel.info/word?data={"kanji":"家","kana":"いえ","romaji":"ue","meaning":"maison","notes":"Uniquement le terme pour 'Maison', 'Appartement' se dit autrement.","themes":["maison","habitation"]}
 ```
 **Success**
 ```json
@@ -75,21 +81,32 @@ PUT > http://wakari-api.huitiemeciel.info/word?data={"kanji":"家","kana":"い�
     "notes": "Uniquement le terme pour 'Maison', 'Appartement' se dit autrement.",
     "updated_at": "2017-02-23 23:04:46",
     "created_at": "2017-02-23 23:04:46",
-    "id": 747
+    "id": 747,
+    "themes": [
+        {
+             "id": 1,
+             "name": "maison"
+        },
+	{
+             "id": 2,
+             "name": "Habitation"
+        }
+    ]
 }
 ```
 **Failure**
 ```json
 {
-  "Error": "No word with id found."
+  "Error": "No data provided."
 }
 ```
+If provided theme is not found, it is not added to the word.
 
 ### POST /word
 Update a word with data provided.
 The updated word is the one specified with parameter "id".
 ```
-POST > http://wakari-api.huitiemeciel.info/word?data={"id":747,"kanji":"#","kana":"kana","romaji":"notTheSame","meaning":"anotherMeaning","notes":"Some notes.","categories":["new","category"]}
+POST > http://wakari-api.huitiemeciel.info/word?data={"id":747,"kanji":"#","kana":"kana","romaji":"notTheSame","meaning":"anotherMeaning","notes":"Some notes.","themes":["new","category"]}
 ```
 ```json
 {
@@ -100,7 +117,17 @@ POST > http://wakari-api.huitiemeciel.info/word?data={"id":747,"kanji":"#","kana
     "meaning": "anotherMeaning",
     "notes": "Some notes.",
     "updated_at": "2017-02-23 23:11:21",
-    "created_at": "2017-02-23 23:04:46"
+    "created_at": "2017-02-23 23:04:46",
+    "themes": [
+        {
+             "id": 3,
+             "name": "new"
+        },
+	{
+             "id": 4,
+             "name": "Category"
+        }
+    ]
 }
 ```
 ```json
@@ -108,7 +135,12 @@ POST > http://wakari-api.huitiemeciel.info/word?data={"id":747,"kanji":"#","kana
   "Error": "No data provided."
 }
 ```
-
+```json
+{
+  "Error": "No word with id found."
+}
+```
+If provided theme is not found, it is not added to the word. Updating a word replace all his themes with new ones.
 
 ### DELETE /word/{id}
 Delete a word with id provided.
@@ -129,3 +161,150 @@ DELETE > http://wakari-api.huitiemeciel.info/word/747
   "Error": "No word with id found."
 }
 ```
+
+## Themes
+
+### GET /theme
+Return all existing themes.
+```
+GET > http://wakari-api.huitiemeciel.info/theme
+```
+```json
+[
+	{
+		"id":1,
+		"name":"Maison"
+	},
+	{
+		"id":2,
+		"name":"Habitation"
+	}
+]
+```
+
+### GET /theme/{id}
+Return theme with specified id.
+```
+GET > http://wakari-api.huitiemeciel.info/theme/1
+```
+**Success**
+```json
+{
+	"id":1,
+	"name":"Maison"
+},
+```
+**Failure**
+```json
+{
+  "Error": "No theme with id found."
+}
+```
+
+### PUT /theme
+Create a theme with data provided.
+Return the created theme with newly attributed id.
+```
+PUT > http://wakari-api.huitiemeciel.info/theme?data={"name":"Alimentation"}
+```
+**Success**
+```json
+{
+	"id":3,
+	"name":"Alimentation"
+},
+```
+**Failure**
+```json
+{
+  "Error": "No data provided."
+}
+```
+
+### POST /theme
+Update a theme with data provided.
+The updated theme is the one specified with parameter "id".
+```
+POST > http://wakari-api.huitiemeciel.info/theme?data={"id":3,"name":"Nourriture"}
+```
+```json
+{
+    "id":3,
+    "name":"Alimentation"
+}
+```
+```json
+{
+  "Error": "No data provided."
+}
+```
+```json
+{
+  "Error": "No theme with id found."
+}
+```
+
+
+### DELETE /theme/{id}
+Delete a theme with id provided.
+```
+DELETE > http://wakari-api.huitiemeciel.info/theme/3
+```
+
+**Success**
+```json
+1
+```
+**Failure**
+```json
+0
+```
+```json
+{
+  "Error": "No theme with id found."
+}
+```
+
+### GET /theme/{key}/words
+Get all words related to theme specified by key.
+Key can be :
+- theme's id
+- theme's name (case insensitive)
+```
+GET > http://wakari-api.huitiemeciel.info/theme/1/words
+GET > http://wakari-api.huitiemeciel.info/theme/maison/words
+GET > http://wakari-api.huitiemeciel.info/theme/Maison/words
+```
+
+**Success**
+```json
+[]
+```
+```json
+[
+	{
+		"id":15,
+		"kanji":"\u660e\u5f8c\u65e5",
+		"kana":"\u3042\u3055\u3063\u3066",
+		"romaji":"",
+		"meaning":"Cabane",
+		"notes":"Uniquement en bois",
+		"created_at":"2017-02-23 23:04:46",
+		"updated_at":"2017-02-23 23:04:46"
+	}
+]
+```
+**Failure**
+```json
+{
+  "Error": "No theme found with key provided."
+}
+```
+```json
+{
+  "Error": "No key provided."
+}
+```
+
+
+
