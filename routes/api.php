@@ -78,4 +78,12 @@ $api->version($params, function ($api) {
         'as'    => 'api.theme.findPattern',
         'uses'  => 'App\Http\Controllers\ThemeController@getThemesFromPattern'
     ]);
+
+    /**
+    * SEARCH
+    */
+    $api->get('search/{pattern}', [
+        'as'    => 'api.search.findPattern',
+        'uses'  => 'App\Http\Controllers\SearchController@getResultsFromPattern'
+    ]);
 });
