@@ -162,6 +162,44 @@ DELETE > http://wakari-api.huitiemeciel.info/word/747
 }
 ```
 
+### GET /word/like/{pattern}/{method?}/{type?}
+Return all words matching the provided pattern. The search method can be 'begins' (default) or 'contains' and can be narrowed to look for 'all' elements (default), 'romaji' only or 'meaning' only.
+
+```
+GET > http://wakari-api.huitiemeciel.info/word/like/a/contains/romaji
+```
+**Success**
+```json
+[
+	{
+		"id":2,
+		"kanji":"\u6328\u62f6\u3059\u308b",
+		"kana":"\u3042\u3044\u3055\u3064\u3059\u308b",
+		"romaji":"aisatsusuru",
+		"meaning":"saluer",
+		"notes":"",
+		"created_at":null,
+		"updated_at":null
+	},
+	{
+		"id":9,
+		"kanji":"\u79cb",
+		"kana":"\u3042\u304d",
+		"romaji":"a",
+		"meaning":"automne",
+		"notes":"abcd",
+		"created_at":null,
+		"updated_at":null
+	}
+]
+```
+**Failure**
+```json
+{
+  "Error": "No pattern provided."
+}
+```
+
 ## Themes
 
 ### GET /theme
@@ -306,5 +344,28 @@ GET > http://wakari-api.huitiemeciel.info/theme/Maison/words
 }
 ```
 
+### GET /theme/like/{pattern}/{method?}
+Return all themes matching the provided pattern. The search method can be 'begins' (default) or 'contains'.
 
-
+```
+GET > http://wakari-api.huitiemeciel.info/thme/like/ai/contains
+```
+**Success**
+```json
+[
+ 	{
+		"id": 1,
+    		"name": "Maison"
+  	},
+  	{
+    		"id": 3,
+    		"name": "Saison"
+  	}
+]
+```
+**Failure**
+```json
+{
+  "Error": "No pattern provided."
+}
+```
