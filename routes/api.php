@@ -21,19 +21,9 @@ $api->version($params, function ($api) {
     /**
     * WORDS
     **/
-    $api->get('word/like/{pattern}/{method?}/{type?}', [
-        'as'    => 'api.word.findPattern',
-        'uses'  => 'App\Http\Controllers\WordController@getWordsFromPattern'
-    ]);
-
     $api->put('word', [
         'as'    => 'api.words.create',
         'uses'  => 'App\Http\Controllers\WordController@addWord'   
-    ]);
-
-    $api->get('word/{id?}', [
-        'as'    => 'api.words.get',
-        'uses'  => 'App\Http\Controllers\WordController@getWordById'   
     ]);
 
     $api->post('word', [
@@ -41,32 +31,37 @@ $api->version($params, function ($api) {
         'uses'  => 'App\Http\Controllers\WordController@updateWord'   
     ]);
 
+    $api->get('word/{id?}', [
+        'as'    => 'api.words.get',
+        'uses'  => 'App\Http\Controllers\WordController@getWordById'   
+    ]);
+
     $api->delete('word/{id}', [
         'as'    => 'api.words.delete',
         'uses'  => 'App\Http\Controllers\WordController@deleteWord'   
     ]);
 
+    $api->get('words/like/{pattern}/{method?}/{type?}', [
+        'as'    => 'api.word.findPattern',
+        'uses'  => 'App\Http\Controllers\WordController@getWordsFromPattern'
+    ]);
+
     /**
     * THEMES
     **/
-    $api->get('theme/like/{pattern}/{method?}', [
-        'as'    => 'api.theme.findPattern',
-        'uses'  => 'App\Http\Controllers\ThemeController@getThemesFromPattern'
-    ]);
-
     $api->put('theme', [
         'as'    => 'api.theme.create',
         'uses'  => 'App\Http\Controllers\ThemeController@addTheme'   
     ]);
 
-    $api->get('theme/{id?}', [
-        'as'    => 'api.theme.get',
-        'uses'  => 'App\Http\Controllers\ThemeController@getThemeById'   
-    ]);
-
     $api->post('theme', [
         'as'    => 'api.theme.update',
         'uses'  => 'App\Http\Controllers\ThemeController@updateTheme'   
+    ]);
+
+    $api->get('theme/{id?}', [
+        'as'    => 'api.theme.get',
+        'uses'  => 'App\Http\Controllers\ThemeController@getThemeById'   
     ]);
 
     $api->delete('theme/{id}', [
@@ -77,5 +72,10 @@ $api->version($params, function ($api) {
     $api->get('theme/{id}/words', [
         'as'    => 'api.theme.findWords',
         'uses'  => 'App\Http\Controllers\ThemeController@getWordsFromTheme'
+    ]);
+
+    $api->get('themes/like/{pattern}/{method?}', [
+        'as'    => 'api.theme.findPattern',
+        'uses'  => 'App\Http\Controllers\ThemeController@getThemesFromPattern'
     ]);
 });
