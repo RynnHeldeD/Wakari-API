@@ -68,6 +68,7 @@ GET > http://wakari-api.huitiemeciel.info/word/2
 ### PUT /word
 Create a word with data provided.
 Return the created word with newly attributed id.
+Take care not to add an extra '/' at the end of the url as it won't match this route.
 ```
 PUT > http://wakari-api.huitiemeciel.info/word?data={"kanji":"家","kana":"いえ","romaji":"ue","meaning":"maison","notes":"Uniquement le terme pour 'Maison', 'Appartement' se dit autrement.","themes":["maison","habitation"]}
 ```
@@ -105,6 +106,7 @@ If provided theme is not found, it is not added to the word.
 ### POST /word
 Update a word with data provided.
 The updated word is the one specified with parameter "id".
+Take care not to add an extra '/' at the end of the url as it won't match this route.
 ```
 POST > http://wakari-api.huitiemeciel.info/word?data={"id":747,"kanji":"#","kana":"kana","romaji":"notTheSame","meaning":"anotherMeaning","notes":"Some notes.","themes":["new","category"]}
 ```
@@ -162,11 +164,11 @@ DELETE > http://wakari-api.huitiemeciel.info/word/747
 }
 ```
 
-### GET /word/like/{pattern}/{method?}/{type?}
+### GET /words/like/{pattern}/{method?}/{type?}
 Return all words matching the provided pattern. The search method can be 'begins' (default) or 'contains' and can be narrowed to look for 'all' elements (default), 'romaji' only or 'meaning' only.
-
+Note the 's' at '/words/...'
 ```
-GET > http://wakari-api.huitiemeciel.info/word/like/a/contains/romaji
+GET > http://wakari-api.huitiemeciel.info/words/like/a/contains/romaji
 ```
 **Success**
 ```json
@@ -242,6 +244,7 @@ GET > http://wakari-api.huitiemeciel.info/theme/1
 ### PUT /theme
 Create a theme with data provided.
 Return the created theme with newly attributed id.
+Take care not to add an extra '/' at the end of the url as it won't match this route.
 ```
 PUT > http://wakari-api.huitiemeciel.info/theme?data={"name":"Alimentation"}
 ```
@@ -262,6 +265,7 @@ PUT > http://wakari-api.huitiemeciel.info/theme?data={"name":"Alimentation"}
 ### POST /theme
 Update a theme with data provided.
 The updated theme is the one specified with parameter "id".
+Take care not to add an extra '/' at the end of the url as it won't match this route.
 ```
 POST > http://wakari-api.huitiemeciel.info/theme?data={"id":3,"name":"Nourriture"}
 ```
@@ -344,11 +348,11 @@ GET > http://wakari-api.huitiemeciel.info/theme/Maison/words
 }
 ```
 
-### GET /theme/like/{pattern}/{method?}
+### GET /themes/like/{pattern}/{method?}
 Return all themes matching the provided pattern. The search method can be 'begins' (default) or 'contains'.
-
+Note the 's' at '/themes/...'
 ```
-GET > http://wakari-api.huitiemeciel.info/thme/like/ai/contains
+GET > http://wakari-api.huitiemeciel.info/themes/like/ai/contains
 ```
 **Success**
 ```json
