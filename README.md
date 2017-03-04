@@ -70,7 +70,7 @@ Create a word with data provided.
 Return the created word with newly attributed id.
 Take care not to add an extra '/' at the end of the url as it won't match this route.
 ```
-PUT > http://wakari-api.huitiemeciel.info/word?data={"kanji":"家","kana":"いえ","romaji":"ue","meaning":"maison","notes":"Uniquement le terme pour 'Maison', 'Appartement' se dit autrement.","themes":["maison","habitation"]}
+PUT > http://wakari-api.huitiemeciel.info/word?data={"kanji":"家","kana":"いえ","romaji":"ue","meaning":"maison","notes":"Uniquement le terme pour 'Maison', 'Appartement' se dit autrement.","themes":[{"id":1, "name":"maison"},{"id":2, "name":"habitation"}]}
 ```
 **Success**
 ```json
@@ -108,7 +108,7 @@ Update a word with data provided.
 The updated word is the one specified with parameter "id".
 Take care not to add an extra '/' at the end of the url as it won't match this route.
 ```
-POST > http://wakari-api.huitiemeciel.info/word?data={"id":747,"kanji":"#","kana":"kana","romaji":"notTheSame","meaning":"anotherMeaning","notes":"Some notes.","themes":["new","category"]}
+POST > http://wakari-api.huitiemeciel.info/word?data={"id":747,"kanji":"#","kana":"kana","romaji":"notTheSame","meaning":"anotherMeaning","notes":"Some notes.","themes":[{"id":3, "name":"new"},{"id":4, "name":"category"}]}
 ```
 ```json
 {
