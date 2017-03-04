@@ -51,8 +51,8 @@ class WordController extends BaseController
             $word->save();
 
             $themes = $data['themes'];
-            foreach ($themes as $themeName) {
-                $oTheme = \App\Theme::where('name', $themeName)->first();
+            foreach ($themes as $theme) {
+                $oTheme = \App\Theme::where('id', $theme['id'])->first();
                 if ($oTheme) {
                     $word->themes()->save($oTheme);
                 }
@@ -89,8 +89,8 @@ class WordController extends BaseController
 
                 $word->themes()->detach();
                 $themes = $data['themes'];
-                foreach ($themes as $themeName) {
-                    $oTheme = \App\Theme::where('name', $themeName)->first();
+                foreach ($themes as $theme) {
+                    $oTheme = \App\Theme::where('id', $theme['id'])->first();
                     if ($oTheme) {
                         $word->themes()->save($oTheme);
                     }
