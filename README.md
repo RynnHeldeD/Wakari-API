@@ -406,56 +406,6 @@ GET > http://wakari-api.huitiemeciel.info/search/ani
       "notes": "",
       "created_at": null,
       "updated_at": null
-    },
-    {
-      "id": 139,
-      "kanji": "お巡りさん",
-      "kana": "おまわりさん",
-      "romaji": "",
-      "meaning": "policier (désigné de manière amicale)",
-      "notes": "",
-      "created_at": null,
-      "updated_at": null
-    },
-    {
-      "id": 458,
-      "kanji": "如何",
-      "kana": "どう",
-      "romaji": "",
-      "meaning": "comment ?, de quelle manière ?",
-      "notes": "",
-      "created_at": null,
-      "updated_at": null
-    },
-    {
-      "id": 463,
-      "kanji": "動物",
-      "kana": "どうぶつ",
-      "romaji": "",
-      "meaning": "animal",
-      "notes": "",
-      "created_at": null,
-      "updated_at": null
-    },
-    {
-      "id": 508,
-      "kanji": "賑やか",
-      "kana": "にぎやか",
-      "romaji": "",
-      "meaning": "animé (en parlant d'une ville, d'une rue...)",
-      "notes": "",
-      "created_at": null,
-      "updated_at": null
-    },
-    {
-      "id": 569,
-      "kanji": "匹",
-      "kana": "ひき",
-      "romaji": "",
-      "meaning": "compteur pour les petits animaux",
-      "notes": "",
-      "created_at": null,
-      "updated_at": null
     }
   ],
   "themes": [
