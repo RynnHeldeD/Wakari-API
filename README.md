@@ -373,3 +373,102 @@ GET > http://wakari-api.huitiemeciel.info/themes/like/ai/contains
   "Error": "No pattern provided."
 }
 ```
+
+## Search
+
+### GET /search/{pattern}
+Return all words and themes whose romaji and name begin with the provided pattern ; and words whose meaning contains the pattern.
+```
+GET > http://wakari-api.huitiemeciel.info/search/ani
+```
+**Success**
+```json
+{
+  "romaji": [
+    {
+      "id": 31,
+      "kanji": "兄",
+      "kana": "あに",
+      "romaji": "ani",
+      "meaning": "grand-frère",
+      "notes": "",
+      "created_at": null,
+      "updated_at": null
+    }
+  ],
+  "meanings": [
+    {
+      "id": 137,
+      "kanji": "お弁当",
+      "kana": "おべんとう",
+      "romaji": "",
+      "meaning": "bentô, panier-repas japonais",
+      "notes": "",
+      "created_at": null,
+      "updated_at": null
+    },
+    {
+      "id": 139,
+      "kanji": "お巡りさん",
+      "kana": "おまわりさん",
+      "romaji": "",
+      "meaning": "policier (désigné de manière amicale)",
+      "notes": "",
+      "created_at": null,
+      "updated_at": null
+    },
+    {
+      "id": 458,
+      "kanji": "如何",
+      "kana": "どう",
+      "romaji": "",
+      "meaning": "comment ?, de quelle manière ?",
+      "notes": "",
+      "created_at": null,
+      "updated_at": null
+    },
+    {
+      "id": 463,
+      "kanji": "動物",
+      "kana": "どうぶつ",
+      "romaji": "",
+      "meaning": "animal",
+      "notes": "",
+      "created_at": null,
+      "updated_at": null
+    },
+    {
+      "id": 508,
+      "kanji": "賑やか",
+      "kana": "にぎやか",
+      "romaji": "",
+      "meaning": "animé (en parlant d'une ville, d'une rue...)",
+      "notes": "",
+      "created_at": null,
+      "updated_at": null
+    },
+    {
+      "id": 569,
+      "kanji": "匹",
+      "kana": "ひき",
+      "romaji": "",
+      "meaning": "compteur pour les petits animaux",
+      "notes": "",
+      "created_at": null,
+      "updated_at": null
+    }
+  ],
+  "themes": [
+    {
+      "id": 6,
+      "name": "Animal"
+    }
+  ]
+}
+```
+**Failure**
+```json
+{
+  "Error": "No pattern provided."
+}
+```
