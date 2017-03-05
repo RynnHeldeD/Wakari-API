@@ -19,6 +19,7 @@ class SearchController extends BaseController
             $meanings = \App\Word::where('meaning', 'like', '%'. $pattern . '%')->get();
             $themes = \App\Theme::where('name', 'like', $pattern . '%')->get();
             
+            $response =  [];
             if (!$romaji->isEmpty()) {
                 $response['romaji'] = JsonHelper::collectionToArray($romaji);
             }
