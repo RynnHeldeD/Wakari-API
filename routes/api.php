@@ -86,4 +86,9 @@ $api->version($params, function ($api) {
         'as'    => 'api.search.findPattern',
         'uses'  => 'App\Http\Controllers\SearchController@getResultsFromPattern'
     ]);
+
+    $api->get('autocomplete/{pattern}', [
+        'as'    => 'api.search.findPattern',
+        'uses'  => 'App\Http\Controllers\SearchController@getAutocompletionResults'
+    ]);
 });

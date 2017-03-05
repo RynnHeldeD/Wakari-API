@@ -34,4 +34,51 @@ class SearchController extends BaseController
 
         return response()->json($response);
     }
+
+    /**
+    * Method : GET
+    * Retuns everything matching specified pattern for autocompletion
+    **/
+    public function getAutocompletionResults($pattern) {
+        if (!empty($pattern)) {
+            $romaji = \App\Word::where('romaji', 'like', $pattern . '%')->get();
+            $meanings = \App\Word::where('meaning', 'like', '%'. $pattern . '%')->get();
+            $themes = \App\Theme::where('name', 'like', $pattern . '%')->get();
+            
+            $response = [];
+            if (!$romaji->isEmpty()) {
+                foreach ($romaji as $word) {
+                    $response[] = (Object) [
+                        'id' => $word->id,
+                        'name' => $word->romaji,
+                        'type' => 'word'
+                    ];
+                }
+            }
+
+            if (!$meanings->isEmpty()) {
+                foreach ($meanings as $word) {
+                    $response[] = (Object) [
+                        'id' => $word->id,
+                        'name' => $word->meaning,
+                        'type' => 'word'
+                    ];
+                }
+            }
+
+            if (!$themes->isEmpty()) {
+                foreach ($themes as $theme) {
+                    $response[] = (Object) [
+                        'id' => $theme->id,
+                        'name' => $theme->name,
+                        'type' => 'theme'
+                    ];
+                }
+            }
+        } else {
+            $response = '{"Error":"No pattern given."}';
+        }
+
+        return response()->json($response);
+    }
 }
