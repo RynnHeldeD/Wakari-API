@@ -47,3 +47,36 @@ GET > http://wakari-api.huitiemeciel.info/search/ani
   "Error": "No pattern provided."
 }
 ```
+
+
+## GET /autocomplete/{pattern}
+Return minimal information of words and themes whose romaji and name begin with the provided pattern ; and words whose meaning contains the pattern.
+```
+GET > http://wakari-api.huitiemeciel.info/autocomplete/ani
+```
+**Success**
+```json
+[
+  {
+    "id":463,
+    "name":"animal",
+    "type":"word"
+  },
+  {
+    "id":508,
+    "name":"anim\u00e9 (en parlant d'une ville, d'une rue...)",
+    "type":"word"
+  },
+  {
+    "id":6,
+    "name":"Animal",
+    "type":"theme"
+  }
+]
+```
+**Failure**
+```json
+{
+  "Error": "No pattern provided."
+}
+```
