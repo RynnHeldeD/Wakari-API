@@ -1,10 +1,10 @@
 # Search
 Everything related to seach feature.
 
-## GET /search/{pattern}
+## POST /search
 Return all words and themes whose romaji and name begin with the provided pattern ; and words whose meaning contains the pattern.
 ```
-GET > http://wakari-api.huitiemeciel.info/search/ani
+POST > http://wakari-api.huitiemeciel.info/search?data={"pattern":"ani"}
 ```
 **Success**
 ```json
@@ -49,10 +49,10 @@ GET > http://wakari-api.huitiemeciel.info/search/ani
 ```
 
 
-## GET /search/autocomplete/{pattern}
+## POST /search/autocomplete
 Return minimal information of words and themes whose romaji and name begin with the provided pattern ; and words whose meaning contains the pattern.
 ```
-GET > http://wakari-api.huitiemeciel.info/search/autocomplete/ani
+POST > http://wakari-api.huitiemeciel.info/search/autocomplete?data={"pattern":"ani"}
 ```
 **Success**
 ```json
