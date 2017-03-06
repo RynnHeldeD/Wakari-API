@@ -16,12 +16,10 @@ class SearchController extends BaseController
     public function getResultsFromPattern(Request $request) {
         $requestData = $request->all();
         $data = json_decode($requestData['data'], true);
-        if (!empty($data) && isset($data['pattern'])) {
-            $pattern = $data['pattern'];
-            
-            $romaji = \App\Word::where('romaji', 'like', $pattern . '%')->get();
-            $meanings = \App\Word::where('meaning', 'like', '%'. $pattern . '%')->get();
-            $themes = \App\Theme::where('name', 'like', $pattern . '%')->get();
+        if (!empty($data)) {
+            $romaji = \App\Word::where('romaji', 'like', $data . '%')->get();
+            $meanings = \App\Word::where('meaning', 'like', '%'. $data . '%')->get();
+            $themes = \App\Theme::where('name', 'like', $data . '%')->get();
             
             $response =  [];
             if (!$romaji->isEmpty()) {
@@ -47,12 +45,10 @@ class SearchController extends BaseController
     public function getAutocompletionResults(Request $request) {
         $requestData = $request->all();
         $data = json_decode($requestData['data'], true);
-        if (!empty($data) && isset($data['pattern'])) {
-            $pattern = $data['pattern'];$
-
-            $romaji = \App\Word::where('romaji', 'like', $pattern . '%')->get();
-            $meanings = \App\Word::where('meaning', 'like', '%'. $pattern . '%')->get();
-            $themes = \App\Theme::where('name', 'like', $pattern . '%')->get();
+        if (!empty($data)) {
+            $romaji = \App\Word::where('romaji', 'like', $data . '%')->get();
+            $meanings = \App\Word::where('meaning', 'like', '%'. $data . '%')->get();
+            $themes = \App\Theme::where('name', 'like', $data . '%')->get();
             
             $response = [];
             if (!$romaji->isEmpty()) {
