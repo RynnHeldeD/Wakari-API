@@ -49,10 +49,10 @@ GET > http://wakari-api.huitiemeciel.info/search/ani
 ```
 
 
-## GET /autocomplete/{pattern}
+## GET /search/autocomplete/{pattern}
 Return minimal information of words and themes whose romaji and name begin with the provided pattern ; and words whose meaning contains the pattern.
 ```
-GET > http://wakari-api.huitiemeciel.info/autocomplete/ani
+GET > http://wakari-api.huitiemeciel.info/search/autocomplete/ani
 ```
 **Success**
 ```json
