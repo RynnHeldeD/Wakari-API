@@ -10,11 +10,15 @@ use App\Http\Helpers\AuthHelper;
 class SearchController extends BaseController
 {
     /**
-    * Method : GET
+    * Method : POST
     * Retuns everything matching specified pattern
     **/
-    public function getResultsFromPattern($pattern) {
-        if (!empty($pattern)) {
+    public function getResultsFromPattern(Request $request) {
+        $requestData = $request->all();
+        $data = json_decode($requestData['data'], true);
+        if (!empty($data) && isset($data['pattern'])) {
+            $pattern = $data['pattern'];
+            
             $romaji = \App\Word::where('romaji', 'like', $pattern . '%')->get();
             $meanings = \App\Word::where('meaning', 'like', '%'. $pattern . '%')->get();
             $themes = \App\Theme::where('name', 'like', $pattern . '%')->get();
@@ -37,11 +41,15 @@ class SearchController extends BaseController
     }
 
     /**
-    * Method : GET
+    * Method : POST
     * Retuns everything matching specified pattern for autocompletion
     **/
-    public function getAutocompletionResults($pattern) {
-        if (!empty($pattern)) {
+    public function getAutocompletionResults(Request $request) {
+        $requestData = $request->all();
+        $data = json_decode($requestData['data'], true);
+        if (!empty($data) && isset($data['pattern'])) {
+            $pattern = $data['pattern'];$
+
             $romaji = \App\Word::where('romaji', 'like', $pattern . '%')->get();
             $meanings = \App\Word::where('meaning', 'like', '%'. $pattern . '%')->get();
             $themes = \App\Theme::where('name', 'like', $pattern . '%')->get();
