@@ -4,7 +4,7 @@ Everything related to seach feature.
 ## POST /search
 Return all words and themes whose romaji and name begin with the provided pattern ; and words whose meaning contains the pattern.
 ```
-POST > http://wakari-api.huitiemeciel.info/search?data={"pattern":"ani"}
+POST > http://wakari-api.huitiemeciel.info/search?data="ani"
 ```
 **Success**
 ```json
@@ -52,7 +52,7 @@ POST > http://wakari-api.huitiemeciel.info/search?data={"pattern":"ani"}
 ## POST /search/autocomplete
 Return minimal information of words and themes whose romaji and name begin with the provided pattern ; and words whose meaning contains the pattern.
 ```
-POST > http://wakari-api.huitiemeciel.info/search/autocomplete?data={"pattern":"ani"}
+POST > http://wakari-api.huitiemeciel.info/search/autocomplete?data="ani"
 ```
 **Success**
 ```json
