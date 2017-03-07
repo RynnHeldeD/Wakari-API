@@ -46,6 +46,7 @@ $api->version($params, function ($api) {
         'uses'  => 'App\Http\Controllers\WordController@getWordsFromPattern'
     ]);
 
+
     /**
     * THEMES
     **/
@@ -79,6 +80,7 @@ $api->version($params, function ($api) {
         'uses'  => 'App\Http\Controllers\ThemeController@getThemesFromPattern'
     ]);
 
+
     /**
     * SEARCH
     */
@@ -91,4 +93,34 @@ $api->version($params, function ($api) {
         'as'    => 'api.search.findPattern',
         'uses'  => 'App\Http\Controllers\SearchController@getAutocompletionResults'
     ]);
+
+
+    /**
+    * PAGES
+    */
+    $api->put('page', [
+        'as'    => 'api.pages.create',
+        'uses'  => 'App\Http\Controllers\PageController@addPage'   
+    ]);
+
+    $api->post('page', [
+        'as'    => 'api.pages.update',
+        'uses'  => 'App\Http\Controllers\PageController@updatePage'   
+    ]);
+
+    $api->get('page/{id?}', [
+        'as'    => 'api.pages.get',
+        'uses'  => 'App\Http\Controllers\PageController@getPageById'   
+    ]);
+
+    $api->delete('page/{id}', [
+        'as'    => 'api.pages.delete',
+        'uses'  => 'App\Http\Controllers\PageController@deletePage'   
+    ]);
+
+    $api->get('pages/like/{pattern}/{method?}', [
+        'as'    => 'api.page.findPattern',
+        'uses'  => 'App\Http\Controllers\PageController@getPagesFromPattern'
+    ]);
+
 });

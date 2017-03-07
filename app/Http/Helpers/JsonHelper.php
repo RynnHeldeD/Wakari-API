@@ -7,8 +7,10 @@ class JsonHelper
 {
     public static function collectionToArray($collection) {
         $objects = [];
-        foreach ($collection as $key => $value) {
-            $objects[] = self::getObjectAttributes($value);
+        if (!is_null($collection)) {
+            foreach ($collection as $key => $value) {
+                $objects[] = self::getObjectAttributes($value);
+            }
         }
 
         return $objects;
