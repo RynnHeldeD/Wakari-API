@@ -6,6 +6,7 @@ use Laravel\Lumen\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use App\Http\Helpers\JsonHelper;
 use App\Http\Helpers\AuthHelper;
+use App\Theme as Theme;
 
 class ThemeController extends BaseController
 {
@@ -17,10 +18,10 @@ class ThemeController extends BaseController
     **/
     public function getThemeById(Request $request, $id = null) {
         if (is_null($id)) {
-            $themes = \App\Theme::all();
+            $themes = Theme::all();
             $json = JsonHelper::collectionToArray($themes);
         } else {
-            $theme = \App\Theme::find($id);
+            $theme = Theme::find($id);
             if (!is_null($theme)) {
                 $json = JsonHelper::objectToArray($theme);
             } else {
@@ -41,7 +42,7 @@ class ThemeController extends BaseController
         $data = json_decode($requestData['data'], true);
 
         if (!empty($data)) {
-            $theme = new \App\Theme();
+            $theme = new Theme();
             $theme->name = $data['name'];
             $theme->save();
 
@@ -64,7 +65,7 @@ class ThemeController extends BaseController
         $data = json_decode($requestData['data'], true);
 
         if (!empty($data)) {
-            $theme = \App\Theme::find($data['id']);
+            $theme = Theme::find($data['id']);
             
             if ($theme) {
                 $theme->name = $data['name'];
@@ -88,7 +89,7 @@ class ThemeController extends BaseController
     **/
     public function deleteTheme(Request $request, $id) {
         if (!empty($id) && is_numeric($id)) {
-            $result = \App\Theme::destroy($id);
+            $result = Theme::destroy($id);
             $response = response()->json($result);
         } else {
             $response = response()->json('{"Error":"No id provided."}');
@@ -104,9 +105,9 @@ class ThemeController extends BaseController
     public function getWordsFromTheme(Request $request, $key) {
         if (!empty($key)) {
             if ( is_numeric($key) ) {
-                $theme = \App\Theme::find($key);
+                $theme = Theme::find($key);
             } else {
-                $theme = \App\Theme::where('name', $key)->first();
+                $theme = Theme::where('name', $key)->first();
             }
 
             $result = [];
@@ -135,7 +136,7 @@ class ThemeController extends BaseController
                 $pattern = '%' . $pattern;
             }
              
-            $result = \App\Theme::where('name', 'like', $pattern)->get();
+            $result = Theme::where('name', 'like', $pattern)->get();
             $response = JsonHelper::collectionToArray($result);
         } else {
             $response = '{"Error":"No pattern provided."}';

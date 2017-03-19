@@ -6,6 +6,10 @@ use Laravel\Lumen\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use App\Http\Helpers\JsonHelper;
 use App\Http\Helpers\AuthHelper;
+use App\Theme as Theme;
+use App\Word as Word;
+
+
 
 class SearchController extends BaseController
 {
@@ -17,9 +21,9 @@ class SearchController extends BaseController
         $requestData = $request->all();
         $data = json_decode($requestData['data'], true);
         if (!empty($data)) {
-            $romaji = \App\Word::where('romaji', 'like', $data . '%')->get();
-            $meanings = \App\Word::where('meaning', 'like', '%'. $data . '%')->get();
-            $themes = \App\Theme::where('name', 'like', $data . '%')->get();
+            $romaji = Word::where('romaji', 'like', $data . '%')->get();
+            $meanings = Word::where('meaning', 'like', '%'. $data . '%')->get();
+            $themes = Theme::where('name', 'like', $data . '%')->get();
             
             $response =  [];
             if (!$romaji->isEmpty()) {
@@ -46,9 +50,9 @@ class SearchController extends BaseController
         $requestData = $request->all();
         $data = json_decode($requestData['data'], true);
         if (!empty($data)) {
-            $romaji = \App\Word::where('romaji', 'like', $data . '%')->get();
-            $meanings = \App\Word::where('meaning', 'like', '%'. $data . '%')->get();
-            $themes = \App\Theme::where('name', 'like', $data . '%')->get();
+            $romaji = Word::where('romaji', 'like', $data . '%')->get();
+            $meanings = Word::where('meaning', 'like', '%'. $data . '%')->get();
+            $themes = Theme::where('name', 'like', $data . '%')->get();
             
             $response = [];
             if (!$romaji->isEmpty()) {

@@ -6,6 +6,8 @@ use Laravel\Lumen\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use App\Http\Helpers\JsonHelper;
 use App\Http\Helpers\AuthHelper;
+use App\Page as Page;
+use App\Theme as Theme;
 
 class PageController extends BaseController
 {
@@ -17,10 +19,10 @@ class PageController extends BaseController
     **/
     public function getPageById(Request $request, $id = null) {
         if (is_null($id)) {
-            $pages = \App\Page::all();
+            $pages = Page::all();
             $response = JsonHelper::collectionToArray($pages);
         } else {
-            $page = \App\Page::find($id);
+            $page = Page::find($id);
             if (!is_null($page)) {
                 $response = JsonHelper::objectToArray($page);
                 $response['themes'] = JsonHelper::collectionToArray($page->themes);
@@ -43,14 +45,14 @@ class PageController extends BaseController
         $data = json_decode($requestData['data'], true);
 
         if (!empty($data)) {
-            $page = new \App\Page();
+            $page = new Page();
             $page->name = $data['name'];
             $page->content = $data['content'];
             $page->save();
             
             $themes = $data['themes'];
             foreach ($themes as $theme) {
-                $oTheme = \App\Theme::where('id', $theme['id'])->first();
+                $oTheme = Theme::where('id', $theme['id'])->first();
                 if ($oTheme) {
                     $page->themes()->save($oTheme);
                 }
@@ -58,7 +60,7 @@ class PageController extends BaseController
 
             $pages = $data['pages'];
             foreach ($pages as $linkedPage) {
-                $oPage = \App\Page::where('id', $linkedPage['id'])->first();
+                $oPage = Page::where('id', $linkedPage['id'])->first();
                 if ($oPage) {
                     $page->pagesLinkedFrom()->save($oPage);
                 }
@@ -84,7 +86,7 @@ class PageController extends BaseController
         $data = json_decode($requestData['data'], true);
 
         if (!empty($data)) {
-            $page = \App\Page::find($data['id']);
+            $page = Page::find($data['id']);
             
             if ($page) {
                 $page->name = $data['name'];
@@ -94,7 +96,7 @@ class PageController extends BaseController
                 $page->themes()->detach();
                 $themes = $data['themes'];
                 foreach ($themes as $theme) {
-                    $oTheme = \App\Theme::where('id', $theme['id'])->first();
+                    $oTheme = Theme::where('id', $theme['id'])->first();
                     if ($oTheme) {
                         $page->themes()->save($oTheme);
                     }
@@ -103,7 +105,7 @@ class PageController extends BaseController
                 $page->pagesLinkedFrom()->detach();
                 $pages = $data['pages'];
                 foreach ($pages as $linkedPage) {
-                    $oPage = \App\Page::where('id', $linkedPage['id'])->first();
+                    $oPage = Page::where('id', $linkedPage['id'])->first();
                     if ($oPage) {
                         $page->pagesLinkedFrom()->save($oPage);
                     }
@@ -129,7 +131,7 @@ class PageController extends BaseController
     **/
     public function deletePage(Request $request, $id) {
         if (!empty($id) && is_numeric($id)) {
-            $response = \App\Page::destroy($id);
+            $response = Page::destroy($id);
         } else {
             $response = '{"Error":"No id provided."}';
         } 
@@ -150,7 +152,7 @@ class PageController extends BaseController
                 $pattern = '%' . $pattern;
             }
 
-            $result = \App\Page::where('name', 'like', $pattern)->get();
+            $result = Page::where('name', 'like', $pattern)->get();
             
             $response = JsonHelper::collectionToArray($result);
         } else {
