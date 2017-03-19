@@ -19,14 +19,16 @@ $params = [
 
 $api->version($params, function ($api) {
     /**
-    * OTHERS
+    * GENERATION
     **/
-    $api->get('kana-generation', [
+    /*
+    $api->get('words/generation/kana/{forceAll?}', [
         'as'    => 'api.kana.generation',
         'uses'  =>  'App\Http\Controllers\WordController@generateKana'
     ]);
-
-    $api->get('romaji-generation', [
+    */
+    
+    $api->get('words/generation/romaji/{forceAll?}', [
         'as'    => 'api.romaji.generation',
         'uses'  =>  'App\Http\Controllers\WordController@generateRomaji'
     ]);

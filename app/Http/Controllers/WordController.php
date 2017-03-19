@@ -240,18 +240,23 @@ class WordController extends BaseController
     * Generate romaji for words
     * Update database records
     **/
-    public function generateRomaji() {
-        $words = Word::where('romaji', '=', '')->get();
+    public function generateRomaji($forceAll = false) {
+        if (!$forceAll) {
+            $words = Word::where('romaji', '=', '')->get();
+        } else {
+            $words = Word::all();
+        }
 
+        $count = 0;
         foreach ($words as $word) {
             $kana = $word->kana;
             $romaji = Transliterator::toRomaji($kana);
-            var_dump($kana);
-            var_dump($romaji);
-            echo "<br/>\r\n";
+            $word->romaji = $romaji;
+            $word->save();
+            $count++;
         }
-        $response = JsonHelper::collectionToArray($words);
 
+        $response = JsonHelper::stringToJson('processed', $count);
         return response()->json($response);
     }
 }

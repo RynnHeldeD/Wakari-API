@@ -249,3 +249,21 @@ POST > http://wakari-api.huitiemeciel.info/word/convert/hiragana?data={"Nicola"}
   "Error": "No data provided."
 }
 ```
+
+
+# Words tools
+Everything about tools and automation for words.
+
+## GET /words/generation/romaji/{forceAll?}
+Update database and set romaji field for words without translation. 
+Process everyword again if parameter forceAll is provided and is true.
+Return the number of updated words.
+```
+GET > http://wakari-api.huitiemeciel.info/words/generation/romaji/
+GET > http://wakari-api.huitiemeciel.info/words/generation/romaji/true
+```
+```json
+{
+  "processed":"764"
+}
+```
