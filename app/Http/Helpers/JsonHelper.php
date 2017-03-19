@@ -2,7 +2,6 @@
 
 namespace App\Http\Helpers;
 
-
 class JsonHelper
 {
     public static function collectionToArray($collection) {
@@ -18,6 +17,10 @@ class JsonHelper
 
     public static function objectToArray($object) {       
         return self::getObjectAttributes($object);
+    }
+
+    public static function stringToJson($key, $string) {
+        return '{"' . $key . '":' . '"' . $string . '"}';
     }
 
     public static function getObjectAttributes($object) {

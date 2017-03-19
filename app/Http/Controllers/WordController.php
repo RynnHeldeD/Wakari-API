@@ -6,6 +6,9 @@ use Laravel\Lumen\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use App\Http\Helpers\JsonHelper;
 use App\Http\Helpers\AuthHelper;
+use App\Http\Helpers\TransliteratorHelper as Transliterator;
+use App\Word as Word;
+use App\Theme as Theme;
 
 class WordController extends BaseController
 {
@@ -17,10 +20,10 @@ class WordController extends BaseController
     **/
     public function getWordById(Request $request, $id = null) {
         if (is_null($id)) {
-            $words = \App\Word::all();
+            $words = Word::all();
             $response = JsonHelper::collectionToArray($words);
         } else {
-            $word = \App\Word::find($id);
+            $word = Word::find($id);
             if (!is_null($word)) {
                 $response = JsonHelper::objectToArray($word);
                 $response['themes'] = JsonHelper::collectionToArray($word->themes);
@@ -42,7 +45,7 @@ class WordController extends BaseController
         $data = json_decode($requestData['data'], true);
 
         if (!empty($data)) {
-            $word = new \App\Word();
+            $word = new Word();
             $word->kanji = $data['kanji'];
             $word->kana = $data['kana'];
             $word->romaji = $data['romaji'];
@@ -52,7 +55,7 @@ class WordController extends BaseController
 
             $themes = $data['themes'];
             foreach ($themes as $theme) {
-                $oTheme = \App\Theme::where('id', $theme['id'])->first();
+                $oTheme = Theme::where('id', $theme['id'])->first();
                 if ($oTheme) {
                     $word->themes()->save($oTheme);
                 }
@@ -77,7 +80,7 @@ class WordController extends BaseController
         $data = json_decode($requestData['data'], true);
 
         if (!empty($data)) {
-            $word = \App\Word::find($data['id']);
+            $word = Word::find($data['id']);
             
             if ($word) {
                 $word->kanji = $data['kanji'];
@@ -90,7 +93,7 @@ class WordController extends BaseController
                 $word->themes()->detach();
                 $themes = $data['themes'];
                 foreach ($themes as $theme) {
-                    $oTheme = \App\Theme::where('id', $theme['id'])->first();
+                    $oTheme = Theme::where('id', $theme['id'])->first();
                     if ($oTheme) {
                         $word->themes()->save($oTheme);
                     }
@@ -115,7 +118,7 @@ class WordController extends BaseController
     **/
     public function deleteWord(Request $request, $id) {
         if (!empty($id) && is_numeric($id)) {
-            $response = \App\Word::destroy($id);
+            $response = Word::destroy($id);
         } else {
             $response = '{"Error":"No id provided."}';
         } 
@@ -139,13 +142,13 @@ class WordController extends BaseController
              
             switch ($type) {
                 case 'romaji':
-                    $result = \App\Word::where('romaji', 'like', $pattern)->get();  
+                    $result = Word::where('romaji', 'like', $pattern)->get();  
                     break;
                 case 'meaning':
-                    $result = \App\Word::where('meaning', 'like', $pattern)->get();  
+                    $result = Word::where('meaning', 'like', $pattern)->get();  
                     break;
                 default:
-                    $result = \App\Word::where('romaji', 'like', $pattern)
+                    $result = Word::where('romaji', 'like', $pattern)
                         ->orWhere('meaning', 'like', $pattern)->get();
                     break;
             }
@@ -158,4 +161,97 @@ class WordController extends BaseController
         return response()->json($response);
     }
 
+    /**
+    * Method : POST
+    * Convert a kana string to Romaji
+    **/
+    public function convertToRomaji(Request $request) {
+        $requestData = $request->all();
+        $data = strtolower($requestData['data']);
+
+        if (!empty($data)) {
+            $response = JsonHelper::stringToJson('result', Transliterator::toRomaji($data));
+        } else {
+            $response = '{"Error":"No data provided"}';
+        }
+
+        return response()->json($response);
+    }
+
+    /**
+    * Method : POST
+    * Convert a romaji string to hiragana
+    **/
+    public function convertToHiragana(Request $request) {
+        $requestData = $request->all();
+        $data = strtolower($requestData['data']);
+
+        if (!empty($data)) {
+            $response = JsonHelper::stringToJson('result', Transliterator::toHiragana($data));
+        } else {
+            $response = '{"Error":"No data provided"}';
+        }
+
+        return response()->json($response);
+    }
+
+    /**
+    * Method : POST
+    * Convert a romaji string to katakana
+    **/
+    public function convertToKatakana(Request $request) {
+        $requestData = $request->all();
+        $data = strtolower($requestData['data']);
+
+        if (!empty($data)) {
+            $response = JsonHelper::stringToJson('result', Transliterator::toKatakana($data));
+        } else {
+            $response = '{"Error":"No data provided"}';
+        }
+
+        return response()->json($response);
+    }
+
+
+    /**
+    * Method : GET
+    * Generate kana for words
+    * Update database records
+    **/
+    public function generateKana() {
+        $words = Word::all();
+
+        foreach ($words as $word) {
+            $kana = '';
+            $romaji = $word->romaji;
+            var_dump($romaji);
+            
+            var_dump($kana);
+            echo'<br/>';
+            
+        }
+        $response = JsonHelper::collectionToArray($words);
+
+        return response()->json($response);
+    }
+
+    /**
+    * Method : GET
+    * Generate romaji for words
+    * Update database records
+    **/
+    public function generateRomaji() {
+        $words = Word::where('romaji', '=', '')->get();
+
+        foreach ($words as $word) {
+            $kana = $word->kana;
+            $romaji = Transliterator::toRomaji($kana);
+            var_dump($kana);
+            var_dump($romaji);
+            echo "<br/>\r\n";
+        }
+        $response = JsonHelper::collectionToArray($words);
+
+        return response()->json($response);
+    }
 }

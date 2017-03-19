@@ -19,6 +19,19 @@ $params = [
 
 $api->version($params, function ($api) {
     /**
+    * OTHERS
+    **/
+    $api->get('kana-generation', [
+        'as'    => 'api.kana.generation',
+        'uses'  =>  'App\Http\Controllers\WordController@generateKana'
+    ]);
+
+    $api->get('romaji-generation', [
+        'as'    => 'api.romaji.generation',
+        'uses'  =>  'App\Http\Controllers\WordController@generateRomaji'
+    ]);
+
+    /**
     * WORDS
     **/
     $api->put('word', [
@@ -39,6 +52,21 @@ $api->version($params, function ($api) {
     $api->delete('word/{id}', [
         'as'    => 'api.words.delete',
         'uses'  => 'App\Http\Controllers\WordController@deleteWord'   
+    ]);
+
+    $api->post('word/convert/romaji', [
+        'as'    => 'api.word.convert.romaji',
+        'uses'  => 'App\Http\Controllers\WordController@convertToRomaji'
+    ]);
+
+    $api->post('word/convert/katakana', [
+        'as'    => 'api.word.convert.katakana',
+        'uses'  => 'App\Http\Controllers\WordController@convertToKatakana'
+    ]);
+
+    $api->post('word/convert/hiragana', [
+        'as'    => 'api.word.convert.hiragana',
+        'uses'  => 'App\Http\Controllers\WordController@convertToHiragana'
     ]);
 
     $api->get('words/like/{pattern}/{method?}/{type?}', [

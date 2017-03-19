@@ -198,3 +198,54 @@ GET > http://wakari-api.huitiemeciel.info/words/like/a/contains/romaji
   "Error": "No pattern provided."
 }
 ```
+
+# Words transliteration
+Everything about converting words from a language to another.
+
+## POST /word/convert/romaji
+Convert some kana (hiragana or katakana) to romaji (latin) characters.
+```
+POST > http://wakari-api.huitiemeciel.info/word/convert/romaji?data={"どうも ありがとう ございます"}
+```
+```json
+{
+  "result": "doumo arigatou gozaimasu"
+}
+```
+```json
+{
+  "Error": "No data provided."
+}
+```
+
+## POST /word/convert/katakana
+Convert some romaji (latin) to katakana characters.
+```
+POST > http://wakari-api.huitiemeciel.info/word/convert/katakana?data={"Nicola"}
+```
+```json
+{
+  "result": "ニコラ"
+}
+```
+```json
+{
+  "Error": "No data provided."
+}
+```
+
+## POST /word/convert/hiragana
+Convert some romaji (latin) to hiragana characters.
+```
+POST > http://wakari-api.huitiemeciel.info/word/convert/hiragana?data={"Nicola"}
+```
+```json
+{
+  "result": "にこら"
+}
+```
+```json
+{
+  "Error": "No data provided."
+}
+```
