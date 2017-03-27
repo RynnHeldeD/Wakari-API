@@ -199,6 +199,38 @@ GET > http://wakari-api.huitiemeciel.info/words/like/a/contains/romaji
 }
 ```
 
+
+## GET /word/exists/{romaji}
+Checks if a word with specified romaji already exists.
+```
+GET > http://wakari-api.huitiemeciel.info/word/exists/akai
+```
+
+**Success**
+```json
+[
+  {
+    "id": 6,
+    "kanji": "赤",
+    "kana": "あか",
+    "romaji": "aka",
+    "meaning": "rouge (le)",
+    "notes": "",
+    "created_at": null,
+    "updated_at": "2017-03-19 10:29:46"
+  }
+]
+```
+**Failure**
+```json
+[]
+```
+```json
+{
+  "Error": "No pattern provided."
+}
+```
+
 # Words transliteration
 Everything about converting words from a language to another.
 

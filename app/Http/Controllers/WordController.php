@@ -264,9 +264,13 @@ class WordController extends BaseController
     * Method : GET
     * Check if word with specified romaji already exists
     **/
-    public function doesWordExists($romaji) {
-		$word = Word::where('romaji', '=', $romaji)->get();
-		$response = JsonHelper::objectToArray($word);
+    public function doesWordExists($romaji) {       
+        if (!empty($romaji)) {
+		    $word = Word::where('romaji', '=', $romaji)->get();
+		    $response = JsonHelper::collectionToArray($word);
+        } else {
+            $response = '{"Error":"No pattern provided."}';
+        }
 
 		return response()->json($response);
 	}
