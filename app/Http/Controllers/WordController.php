@@ -259,4 +259,16 @@ class WordController extends BaseController
         $response = JsonHelper::stringToJson('processed', $count);
         return response()->json($response);
     }
+	
+	/**
+    * Method : GET
+    * Check if word with specified romaji already exists
+    **/
+    public function doesWordExists($romaji) {
+		$word = Word::where('romaji', '=', $romaji)->get();
+		$response = JsonHelper::objectToArray($word);
+
+		return response()->json($response);
+	}
+	
 }

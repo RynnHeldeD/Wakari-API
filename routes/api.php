@@ -56,6 +56,11 @@ $api->version($params, function ($api) {
         'uses'  => 'App\Http\Controllers\WordController@deleteWord'   
     ]);
 
+    $api->get('word/exists/{romaji}', [
+        'as'    => 'api.words.exists',
+        'uses'  => 'App\Http\Controllers\WordController@doesWordExists'   
+    ]);
+
     $api->post('word/convert/romaji', [
         'as'    => 'api.word.convert.romaji',
         'uses'  => 'App\Http\Controllers\WordController@convertToRomaji'
