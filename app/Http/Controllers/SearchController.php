@@ -84,6 +84,11 @@ class SearchController extends BaseController
                     ];
                 }
             }
+
+            usort($response, function($a, $b)
+            {
+                return strcmp($a->name, $b->name);
+            });
         } else {
             $response = '{"Error":"No pattern given."}';
         }
